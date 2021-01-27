@@ -1,18 +1,10 @@
+package coffeemachine;
 
 import java.util.Objects;
 
+import static coffeemachine.CoffeeType.*;
+
 class CoffeeMachine {
-    private static final int ESPRESSO_WATER = 250;
-    private static final int ESPRESSO_BEANS = 16;
-    private static final int ESPRESSO_PRICE = 4;
-    private static final int LATTE_WATER = 350;
-    private static final int LATTE_MILK = 75;
-    private static final int LATTE_BEANS = 20;
-    private static final int LATTE_PRICE = 7;
-    private static final int CAPPUCCINO_WATER = 200;
-    private static final int CAPPUCCINO_MILK = 100;
-    private static final int CAPPUCCINO_BEANS = 12;
-    private static final int CAPPUCCINO_PRICE = 6;
 
     private CoffeeMachineState currentState = CoffeeMachineState.WAITING_FOR_ACTION;
 
@@ -21,8 +13,6 @@ class CoffeeMachine {
     private int beans = 120;
     private int cups = 9;
     private int money = 550;
-
-
 
     private void setCurrentState(CoffeeMachineState state) {
         currentState = state;
@@ -33,7 +23,7 @@ class CoffeeMachine {
     }
 
     void act(String input) {
-        input = Objects.requireNonNullElse(input, "waiting_for_action");
+        input = Objects.requireNonNullElse(input, "");
 
         if ((input.equals("exit") || input.equals("buy") || input.equals("fill") || input.equals("take") || input.equals("remaining"))) {
             setCurrentState(CoffeeMachineState.valueOf(input.toUpperCase()));
@@ -113,23 +103,23 @@ class CoffeeMachine {
 
             switch (input) {
                 case "1":
-                    waterNeeded = ESPRESSO_WATER;
-                    beansNeeded = ESPRESSO_BEANS;
-                    moneyNeeded = ESPRESSO_PRICE;
+                    waterNeeded = ESPRESSO.getWater();
+                    beansNeeded = ESPRESSO.getBeans();
+                    moneyNeeded = ESPRESSO.getPrice();
 
                     break;
                 case "2":
-                    waterNeeded = LATTE_WATER;
-                    beansNeeded = LATTE_BEANS;
-                    milkNeeded = LATTE_MILK;
-                    moneyNeeded = LATTE_PRICE;
+                    waterNeeded = LATTE.getWater();
+                    beansNeeded = LATTE.getBeans();
+                    milkNeeded = LATTE.getMilk();
+                    moneyNeeded = LATTE.getPrice();
 
                     break;
                 case "3":
-                    waterNeeded = CAPPUCCINO_WATER;
-                    beansNeeded = CAPPUCCINO_BEANS;
-                    milkNeeded = CAPPUCCINO_MILK;
-                    moneyNeeded = CAPPUCCINO_PRICE;
+                    waterNeeded = CAPPUCCINO.getWater();
+                    beansNeeded = CAPPUCCINO.getBeans();
+                    milkNeeded = CAPPUCCINO.getMilk();
+                    moneyNeeded = CAPPUCCINO.getPrice();
 
                     break;
             }
@@ -194,11 +184,12 @@ class CoffeeMachine {
 
     private void printRemaining() {
         System.out.printf("\nThe coffee machine has:\n" +
-                "%d of water\n" +
-                "%d of milk\n" +
-                "%d of coffee beans\n" +
-                "%d of disposable cups\n" +
-                "$%d of money\n", water, milk, beans, cups, money
+                        "%d of water\n" +
+                        "%d of milk\n" +
+                        "%d of coffee beans\n" +
+                        "%d of disposable cups\n" +
+                        "$%d of money\n",
+                water, milk, beans, cups, money
         );
         setCurrentState(CoffeeMachineState.WAITING_FOR_ACTION);
     }

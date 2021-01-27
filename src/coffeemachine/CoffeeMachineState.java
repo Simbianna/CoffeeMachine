@@ -1,3 +1,4 @@
+package coffeemachine;
 
 public enum CoffeeMachineState {
     WAITING_FOR_ACTION,
